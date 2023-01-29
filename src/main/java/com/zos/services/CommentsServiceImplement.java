@@ -75,6 +75,18 @@ public class CommentsServiceImplement implements CommentService {
 	}
 
 
+	@Override
+	public Comments unlikeComment(Integer commentId, Integer userId) throws UserException, CommentException {
+		User user=userService.findUserById(userId);
+		Comments comment=findCommentById(commentId);
+		
+		comment.getLikedByUsers().remove(user);
+		
+		return repo.save(comment);
+		
+	}
+
+
 
 
 	

@@ -36,5 +36,12 @@ public class CommentController {
 		return new ResponseEntity<Comments>(likedComment,HttpStatus.OK);
 	}
 	
+	@PutMapping("/comments/unlike/{userId}")
+	public ResponseEntity<Comments> unlikeCommentHandler(@RequestBody Comments comment, @PathVariable Integer userId) throws UserException, CommentException{
+		Comments likedComment=commentService.unlikeComment(comment.getId(), userId);
+		
+		return new ResponseEntity<Comments>(likedComment,HttpStatus.OK);
+	}
+	
 
 }
