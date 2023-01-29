@@ -1,5 +1,8 @@
 package com.zos.services;
 
+import com.zos.exception.CommentException; 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +49,37 @@ public class CommentsServiceImplement implements CommentService {
 		postRepo.save(post);
 		return newComment;
 	}
+
+
+	@Override
+	public Comments findCommentById(Integer commentId) throws CommentException {
+		Optional<Comments> opt=repo.findById(commentId);
+		
+		if(opt.isPresent()) {
+			return opt.get();
+		}
+		throw new CommentException("comment not exist with id : "+commentId);
+	}
+
+	@Override
+	public Comments likeComment(Integer commentId, Integer userId) throws UserException, CommentException {
+		// TODO Auto-generated method stub
+		
+		User user=userService.findUserById(userId);
+		Comments comment=findCommentById(commentId);
+		
+		comment.getLikedByUsers().add(user);
+		
+		return repo.save(comment);
+		
+	}
+
+
+
+
+	
+	
+	
 	
 	
 

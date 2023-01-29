@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zos.exception.CommentException;
 import com.zos.exception.PostException;
 import com.zos.exception.UserException;
 import com.zos.model.Comments;
@@ -25,6 +27,13 @@ public class CommentController {
 		Comments createdComment = commentService.createComment(comment, postId, userId);
 		return new ResponseEntity<Comments>(createdComment,HttpStatus.CREATED);
 		
+	}
+	
+	@PutMapping("/comments/like/{userId}")
+	public ResponseEntity<Comments> likeCommentHandler(@RequestBody Comments comment, @PathVariable Integer userId) throws UserException, CommentException{
+		Comments likedComment=commentService.likeComment(comment.getId(), userId);
+		
+		return new ResponseEntity<Comments>(likedComment,HttpStatus.OK);
 	}
 	
 
