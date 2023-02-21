@@ -3,10 +3,17 @@ package com.zos.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.zos.dto.UserDto;
+
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
@@ -18,27 +25,37 @@ public class Comments {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@ManyToOne
+	@Embedded
 	@NotNull
-	private User user;
+	@AttributeOverride(name="id",column = @Column(name="user_id"))
+	private UserDto userDto;
 	
 	@NotNull
 	private String content;
 	
-	@OneToMany
-	private Set<User> likedByUsers= new HashSet<>();
+	@ElementCollection
+	@Embedded
+	private Set<UserDto> likedByUsers= new HashSet<>();
 	
 	public Comments() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Comments(Integer id, @NotNull User user, @NotNull String content, Set<User> likedByUsers) {
+	
+	
+
+
+	public Comments(Integer id, @NotNull UserDto userDto, @NotNull String content, Set<UserDto> likedByUsers) {
 		super();
 		this.id = id;
-		this.user = user;
+		this.userDto = userDto;
 		this.content = content;
 		this.likedByUsers = likedByUsers;
 	}
+
+
+
+
 
 	public Integer getId() {
 		return id;
@@ -48,14 +65,7 @@ public class Comments {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
+	
 	public String getContent() {
 		return content;
 	}
@@ -64,12 +74,30 @@ public class Comments {
 		this.content = content;
 	}
 
-	public Set<User> getLikedByUsers() {
+
+	public Set<UserDto> getLikedByUsers() {
 		return likedByUsers;
 	}
 
-	public void setLikedByUsers(Set<User> likedByUsers) {
+
+
+
+
+	public void setLikedByUsers(Set<UserDto> likedByUsers) {
 		this.likedByUsers = likedByUsers;
+	}
+
+
+
+
+
+	public UserDto getUserDto() {
+		return userDto;
+	}
+
+
+	public void setUserDto(UserDto userDto) {
+		this.userDto = userDto;
 	}
 
 	

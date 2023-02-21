@@ -23,7 +23,7 @@ public class GlobleException {
 	}
 	
 	@ExceptionHandler(PostException.class)
-	public ResponseEntity<ErrorDetails> PostExceptionHandler(UserException ue, WebRequest req){
+	public ResponseEntity<ErrorDetails> PostExceptionHandler(PostException ue, WebRequest req){
 		
 		ErrorDetails err= new ErrorDetails(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
 		

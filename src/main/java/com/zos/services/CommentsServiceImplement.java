@@ -1,5 +1,6 @@
 package com.zos.services;
 
+import com.zos.dto.UserDto;
 import com.zos.exception.CommentException; 
 import java.util.Optional;
 
@@ -40,7 +41,12 @@ public class CommentsServiceImplement implements CommentService {
 		
 		// TODO Auto-generated method stub
 		
-		comment.setUser(user);
+		UserDto userDto=new UserDto();
+		userDto.setEmail(user.getEmail());
+		userDto.setId(user.getId());
+		userDto.setUsername(user.getUsername());
+		
+		comment.setUserDto(userDto);
 		
 		Comments newComment= repo.save(comment);
 		
@@ -68,7 +74,12 @@ public class CommentsServiceImplement implements CommentService {
 		User user=userService.findUserById(userId);
 		Comments comment=findCommentById(commentId);
 		
-		comment.getLikedByUsers().add(user);
+		UserDto userDto=new UserDto();
+		userDto.setEmail(user.getEmail());
+		userDto.setId(user.getId());
+		userDto.setUsername(user.getUsername());
+		
+		comment.getLikedByUsers().add(userDto);
 		
 		return repo.save(comment);
 		

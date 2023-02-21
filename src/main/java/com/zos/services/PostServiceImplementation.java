@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zos.dto.UserDto;
 import com.zos.exception.PostException;
 import com.zos.exception.UserException;
 import com.zos.model.Post;
@@ -29,7 +30,14 @@ public class PostServiceImplementation implements PostService {
 	public Post createPost(Post post, Integer userId) throws UserException   {
 		
 		User user = userService.findUserById(userId);
-		post.setUser(user);
+		
+		UserDto userDto=new UserDto();
+		
+		userDto.setEmail(user.getEmail());
+		userDto.setUsername(user.getUsername());
+		userDto.setId(user.getId());
+		
+		post.setUser(userDto);
 		
 		
 			Post createdPost =postRepo.save(post);
@@ -77,12 +85,20 @@ public class PostServiceImplementation implements PostService {
 		// TODO Auto-generated method stub
 		
 		User user= userService.findUserById(userId);
-		Post post=findePostById(postId);
-		post.getLikedByUsers().add(user);
-	
-	
 		
+		UserDto userDto=new UserDto();
+		
+		userDto.setEmail(user.getEmail());
+		userDto.setUsername(user.getUsername());
+		userDto.setId(user.getId());
+		
+		Post post=findePostById(postId);
+		post.getLikedByUsers().add(userDto);
+	
+	
 		return postRepo.save(post);
+		
+		
 	}
 
 	@Override
@@ -90,12 +106,38 @@ public class PostServiceImplementation implements PostService {
 		// TODO Auto-generated method stub
 		
 		User user= userService.findUserById(userId);
+		UserDto userDto=new UserDto();
+		
+		userDto.setEmail(user.getEmail());
+		userDto.setUsername(user.getUsername());
+		userDto.setId(user.getId());
+		
 		Post post=findePostById(postId);
-		post.getLikedByUsers().remove(user);
+		post.getLikedByUsers().remove(userDto);
 	
 	
 		
 		return postRepo.save(post);
+	}
+
+
+	@Override
+	public Post deletePost(Integer postId, Integer userId) throws UserException, PostException {
+		// TODO Auto-generated method stub
+		
+		Post post =findePostById(postId);
+		
+		User user=userService.findUserById(userId);
+		
+		if(post.getUser().getId()!=user.getId()) {
+			throw new PostException("You Dont have access to delet this post");
+		}
+		
+		postRepo.deleteById(postId);
+		
+		return post;
+		
+		
 	}
 
 //	@Override

@@ -30,39 +30,57 @@ public class Story {
 	public Story() {
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Story(Integer id, @NotNull User user, @NotNull String image, String captions) {
+
+	public Story(Integer id, @NotNull User user, @NotNull String image, String captions, LocalDateTime timestamp) {
 		super();
 		this.id = id;
 		this.user = user;
 		this.image = image;
 		this.captions = captions;
+		this.timestamp = timestamp;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
+
 	public String getImage() {
 		return image;
 	}
+
 	public void setImage(String image) {
 		this.image = image;
 	}
+
 	public String getCaptions() {
 		return captions;
 	}
+
 	public void setCaptions(String captions) {
 		this.captions = captions;
 	}
+
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
+	}
+	
+	
 	
 	
 

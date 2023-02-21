@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,6 +77,15 @@ public class PostController {
 		
 		return new ResponseEntity<Post>(updatedPost,HttpStatus.OK);
 				
+	}
+	
+	@DeleteMapping("/posts/delete/{postId}/{userId}")
+	public ResponseEntity<Post> deletePostHandler(@PathVariable Integer postId, @PathVariable Integer userId) throws UserException, PostException{
+		
+		Post post=postService.deletePost(postId, userId);
+		
+		return new ResponseEntity<Post> (post, HttpStatus.OK);
+		
 	}
 
 }

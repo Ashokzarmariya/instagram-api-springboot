@@ -1,11 +1,19 @@
 package com.zos.model;
 import java.util.*;
 
+import com.zos.dto.UserDto;
+
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -20,20 +28,29 @@ public class Post {
 	private String title;
 	private String image;
 	
-	@ManyToOne
-	private User user;
+	
+	@Embedded
+	@AttributeOverride(name="id",column = @Column(name="user_id"))
+	@AttributeOverride(name="email",column = @Column(name="user_email"))
+	@AttributeOverride(name="username",column = @Column(name="user_username"))
+	private UserDto user;
 	
 	@OneToMany
 	private List<Comments> comments=new ArrayList<Comments>();
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	private Set<User> likedByUsers= new HashSet<>(); 
+	@ElementCollection
+	@Embedded
+	@JoinTable(name = "likeByUsers", joinColumns = @JoinColumn(name="user_id"))
+	private Set<UserDto> likedByUsers= new HashSet<>(); 
 	
 	public Post() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Post(Integer id, String title, String image, User user, List<Comments> comments, Set<User> likedByUsers) {
+	
+
+	public Post(Integer id, String title, String image, UserDto user, List<Comments> comments,
+			Set<UserDto> likedByUsers) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -42,6 +59,8 @@ public class Post {
 		this.comments = comments;
 		this.likedByUsers = likedByUsers;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -67,13 +86,7 @@ public class Post {
 		this.image = image;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
+	
 
 	public List<Comments> getComments() {
 		return comments;
@@ -83,13 +96,30 @@ public class Post {
 		this.comments = comments;
 	}
 
-	public Set<User> getLikedByUsers() {
+
+
+	public UserDto getUser() {
+		return user;
+	}
+
+
+
+	public void setUser(UserDto user) {
+		this.user = user;
+	}
+
+
+
+	public Set<UserDto> getLikedByUsers() {
 		return likedByUsers;
 	}
 
-	public void setLikedByUsers(Set<User> likedByUsers) {
+
+
+	public void setLikedByUsers(Set<UserDto> likedByUsers) {
 		this.likedByUsers = likedByUsers;
 	}
+
 
 	
 

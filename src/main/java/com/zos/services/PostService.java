@@ -11,6 +11,8 @@ public interface PostService {
 
 	public Post createPost(Post post,Integer userId) throws UserException;
 	
+	public Post deletePost(Integer postId, Integer userId) throws UserException,PostException;
+	
 	public List<Post> findPostByUserId(Integer userId) throws UserException;
 	
 	public Post findePostById(Integer postId) throws PostException;
