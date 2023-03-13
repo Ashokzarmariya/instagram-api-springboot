@@ -19,7 +19,7 @@ public interface PostService {
 	
 	public List<Post> findAllPost() throws PostException;
 	
-	public List<Post> findAllPostByUserIds() throws PostException, UserException;
+	public List<Post> findAllPostByUserIds(List<Integer> userIds) throws PostException, UserException;
 	
 //	public Post likePost(Integer postId, Integer userId) throws UserException, PostException;
 

@@ -33,8 +33,6 @@ public class PostController {
 	@PostMapping("/posts/create/{id}")
 	public ResponseEntity<Post> createPostHandler(@RequestBody Post post,@PathVariable("id") Integer userId) throws UserException{
 		
-		
-		
 		Post createdPost = postService.createPost(post, userId);
 		
 		return new ResponseEntity<Post>(createdPost,HttpStatus.CREATED);
@@ -44,6 +42,16 @@ public class PostController {
 	public ResponseEntity<List<Post>> findPostByUserIdHandler(@PathVariable("userId") Integer userId) throws UserException{
 		
 		List<Post> posts=postService.findPostByUserId(userId);
+		
+		return new ResponseEntity<List<Post>>(posts,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/posts/following/{userIds}")
+	public ResponseEntity<List<Post>> findAllPostByUserIds(@PathVariable("userIds") List<Integer> userIds) throws PostException, UserException {
+		
+		List<Post> posts=postService.findAllPostByUserIds(userIds);
+		
 		return new ResponseEntity<List<Post>>(posts,HttpStatus.OK);
 	}
 	

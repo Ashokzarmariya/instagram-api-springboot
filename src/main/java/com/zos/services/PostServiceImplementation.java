@@ -142,9 +142,17 @@ public class PostServiceImplementation implements PostService {
 
 
 	@Override
-	public List<Post> findAllPostByUserIds() throws PostException, UserException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Post> findAllPostByUserIds(List<Integer> userIds) throws PostException, UserException {
+		
+		
+		List<Post> posts= postRepo.findAllPostByUserIds(userIds);
+		
+		if(posts.size()==0) {
+			throw new PostException("No Post Available of your followings");
+		}
+		
+		
+		return posts;
 	}
 
 
