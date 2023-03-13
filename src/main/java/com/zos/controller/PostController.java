@@ -33,9 +33,11 @@ public class PostController {
 	@PostMapping("/posts/create/{id}")
 	public ResponseEntity<Post> createPostHandler(@RequestBody Post post,@PathVariable("id") Integer userId) throws UserException{
 		
+		System.out.println("create post ---- ");
+		
 		Post createdPost = postService.createPost(post, userId);
 		
-		return new ResponseEntity<Post>(createdPost,HttpStatus.CREATED);
+		return new ResponseEntity<Post>(createdPost, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/posts/all/{userId}")

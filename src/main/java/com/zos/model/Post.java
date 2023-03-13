@@ -25,8 +25,11 @@ public class Post {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private String title;
+	private String caption;
+	
+	@Column(nullable = false)
 	private String image;
+	private String location;
 	
 	
 	@Embedded
@@ -49,16 +52,25 @@ public class Post {
 
 	
 
-	public Post(Integer id, String title, String image, UserDto user, List<Comments> comments,
+	
+
+
+
+	public Post(Integer id, String caption, String image, String location, UserDto user, List<Comments> comments,
 			Set<UserDto> likedByUsers) {
 		super();
 		this.id = id;
-		this.title = title;
+		this.caption = caption;
 		this.image = image;
+		this.location = location;
 		this.user = user;
 		this.comments = comments;
 		this.likedByUsers = likedByUsers;
 	}
+
+
+
+
 
 
 
@@ -70,13 +82,47 @@ public class Post {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	
+
+	public String getCaption() {
+		return caption;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+
+
+
+
+
+
+	public void setCaption(String caption) {
+		this.caption = caption;
 	}
+
+
+
+
+
+
+
+	public String getLocation() {
+		return location;
+	}
+
+
+
+
+
+
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+
+
+
+
+
 
 	public String getImage() {
 		return image;
