@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zos.dto.UserDto;
 
 import jakarta.persistence.ElementCollection;
@@ -25,6 +26,8 @@ public class User {
 	private Integer id;
 	private String username;
 	private String email;
+	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	
 	@ElementCollection

@@ -140,23 +140,14 @@ public class PostServiceImplementation implements PostService {
 		
 	}
 
-//	@Override
-//	public Post likePost(Integer userId, Integer postId)  {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
+	@Override
+	public List<Post> findAllPostByUserIds() throws PostException, UserException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
-//	@Override
-//	public Post likePost(Integer userId, Integer postId) throws PostException, UserException {
-//		User user=userService.findUserById(userId);
-//		Post post=findePostById(postId);
-//		
-//		post.getLikedByUsers().add(user);
-//		
-//		return postRepo.save(post);
-//		
-//	}
 	
 	
 

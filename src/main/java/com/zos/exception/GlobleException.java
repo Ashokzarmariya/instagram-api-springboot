@@ -32,7 +32,15 @@ public class GlobleException {
 	}
 	
 	@ExceptionHandler(CommentException.class)
-	public ResponseEntity<ErrorDetails> CommentsExceptionHandler(UserException ue, WebRequest req){
+	public ResponseEntity<ErrorDetails> CommentsExceptionHandler(CommentException ue, WebRequest req){
+		
+		ErrorDetails err= new ErrorDetails(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
+		
+		return new ResponseEntity<ErrorDetails>(err,HttpStatus.BAD_REQUEST);
+		
+	}
+	@ExceptionHandler(StoryException.class)
+	public ResponseEntity<ErrorDetails> StoryExceptionHandler(StoryException ue, WebRequest req){
 		
 		ErrorDetails err= new ErrorDetails(ue.getMessage(),req.getDescription(false),LocalDateTime.now());
 		

@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 //import com.zos.model.User;
@@ -22,22 +23,29 @@ public class UserUserDetailService implements UserDetailsService {
 	
 	@Autowired
 	private UserRepository userRepo;
+	
+	
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, BadCredentialsException {
 		
 		
 		Optional<com.zos.model.User> opt=userRepo.findByEmail(username);
+		
+		
 		
 		if(opt.isPresent()) {
 			com.zos.model.User user=opt.get();
 			
 			List<GrantedAuthority> authorities=new ArrayList<>();
 			
+			System.out.println("errrrr ----------- "+ username);
+			
 			return new User(user.getEmail(), user.getPassword(), authorities);
-		}else
-			throw new BadCredentialsException("Bad Credential");
+		}
 		
+			
+			throw new BadCredentialsException("Bad Credential"+ username);
 		
 	}
 
